@@ -1,21 +1,35 @@
-// Games.js
-import React from "react";
-import { Table, TableBody, TableHeader, TableRow } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import {
+  ListGroup,
+  ListGroupItem,
+  ListGroupItemHeading,
+  ListGroupItemText,
+} from "react-bootstrap";
 
-interface GamesProps {
-  games: Array<{
-    date: string;
-    round: number;
-    homeTeam: {
-      name: string;
-    };
-    awayTeam: {
-      name: string;
-    };
-    homeScore: number;
-    awayScore: number;
-  }>;
-}
+const TableMatches = () => {
+  const [matches, setMatches] = useState([]);
 
-const Games = ({ games }) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(
+        "https://php74.appgo.pl/sport_api/api/public/api/games?page=1&onPage=5&orderDirection=desc&orderBy=round"
+      );
+      const data = await response.json();
+      setMatches(data);
+    };
+    fetchData();
+  }, []);
+
   return (
+    <ListGroup>
+      {matches.map((match, index) => (
+        <ListGroupItem key={index}>
+          <ListGroupItemHeading>
+            {match.round} - {match.date}
+          </ListGroupItemHeading>
+          <ListGroupItemText>
+            {match.homeTeam} {match.homeScore} - {match.awayTeam} {match.awayScore}
+          </ListGroupItemText>
+        </ListGroupItem>
+      ))}
+    </ListGroup>
