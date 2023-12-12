@@ -1,47 +1,44 @@
-import React from "react";
-import { Table, TableBody, TableHeader, TableRow } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Table, TableColumn } from "react-bootstrap";
 
-interface TableProps {
-  teams: Array<{
-    name: string;
-    points: number;
-    wins: number;
-    draws: number;
-    losses: number;
-    goalsFor: number;
-    goalsAgainst: number;
-  }>;
-}
+const TableLeague = () => {
+  const [league, setLeague] = useState([]);
 
-const Table = ({ teams }) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("https://php74.appgo.pl/sport_api/api/public/api/table");
+      const data = await response.json();
+      setLeague(data);
+    };
+    fetchData();
+  }, []);
+
   return (
     <Table striped bordered hover>
-      <TableHeader>
-        <TableRow>
+      <thead>
+        <tr>
+          <th>Miejsce</th>
           <th>Drużyna</th>
           <th>Punkty</th>
           <th>Mecze wygrane</th>
-          <th>Remisy</th>
+          <th>Mecze remisowane</th>
           <th>Mecze przegrane</th>
-          <th>Bramki zdobyte</th>
-          <th>Bramki stracone</th>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {teams.map((team) => (
-          <TableRow key={team.id}>
+        </tr>
+      </thead>
+      <tbody>
+        {league.map((team, index) => (
+          <tr key={index}>
+            <td>{index + 1}</td>
             <td>{team.name}</td>
             <td>{team.points}</td>
             <td>{team.wins}</td>
             <td>{team.draws}</td>
             <td>{team.losses}</td>
-            <td>{team.goalsFor}</td>
-            <td>{team.goalsAgainst}</td>
-          </TableRow>
+          </tr>
         ))}
-      </TableBody>
+      </tbody>
     </Table>
   );
 };
 
-export default Table;
+export default TableLeague;
