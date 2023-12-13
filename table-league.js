@@ -37,6 +37,16 @@ const TableLeague = () => {
           </tr>
         ))}
       </tbody>
+      <tfoot>
+        <tr>
+          <th>Razem</th>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+        </tr>
+      </tfoot>
     </Table>
   );
 };
