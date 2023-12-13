@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import TableLeague from "./table-league.jsx";
-import MatchesList from "./matches-list.jsx";
+import TableLeague from "./table-league.js";
+import MatchesList from "./matches-list.js";
 
 class App extends Component {
   render() {
