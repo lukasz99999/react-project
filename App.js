@@ -1,21 +1,16 @@
-// App.js
-import React from "react";
-import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
-import Table from "./components/Table";
-import Games from "./components/Games";
+import React, { Component } from "react";
+import TableLeague from "./table-league.jsx";
+import MatchesList from "./matches-list.jsx";
 
-function App() {
-  return (
-    <BrowserRouter>
+class App extends Component {
+  render() {
+    return (
       <div>
-        <Table />
-        <Games />
+        <TableLeague />
+        <MatchesList />
       </div>
-    </BrowserRouter>
-  );
+    );
+  }
 }
 
-const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
-
+export default App;
