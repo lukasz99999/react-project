@@ -1,39 +1,55 @@
 import React, { useState, useEffect } from "react";
-import {
-  ListGroup,
-  ListGroupItem,
-  ListGroupItemHeading,
-  ListGroupItemText,
-} from "react-bootstrap";
+import { Table, TableColumn } from "react-bootstrap";
 
-const TableMatches = () => {
-  const [matches, setMatches] = useState([]);
+const TableLeague = () => {
+  const [league, setLeague] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(
-        "https://php74.appgo.pl/sport_api/api/public/api/games?page=1&onPage=5&orderDirection=desc&orderBy=round"
-      );
+      const response = await fetch("https://php74.appgo.pl/sport_api/api/public/api/table");
       const data = await response.json();
-      setMatches(data);
+      setLeague(data);
     };
     fetchData();
   }, []);
 
   return (
-    <ListGroup>
-      {matches.map((match, index) => (
-        <ListGroupItem key={index}>
-          <ListGroupItemHeading>
-            {match.round} - {match.date}
-          </ListGroupItemHeading>
-          <ListGroupItemText>
-            {match.homeTeam} {match.homeScore} - {match.awayTeam} {match.awayScore}
-          </ListGroupItemText>
-        </ListGroupItem>
-      ))}
-    </ListGroup>
+    <Table striped bordered hover>
+      <thead>
+        <tr>
+          <th>Miejsce</th>
+          <th>Drużyna</th>
+          <th>Punkty</th>
+          <th>Mecze wygrane</th>
+          <th>Mecze remisowane</th>
+          <th>Mecze przegrane</th>
+        </tr>
+      </thead>
+      <tbody>
+        {league.map((team, index) => (
+          <tr key={index}>
+            <td>{index + 1}</td>
+            <td>{team.name}</td>
+            <td>{team.points}</td>
+            <td>{team.wins}</td>
+            <td>{team.draws}</td>
+            <td>{team.losses}</td>
+          </tr>
+        ))}
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>Razem</th>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+        </tr>
+      </tfoot>
+    </Table>
   );
 };
 
-export default TableMatches;
+export default TableLeague;
+
