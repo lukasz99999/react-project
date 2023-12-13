@@ -33,3 +33,7 @@ const TableMatches = () => {
         </ListGroupItem>
       ))}
     </ListGroup>
+  );
+};
+
+export default TableMatches;
